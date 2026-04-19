@@ -1,0 +1,1 @@
+select * from staff s order by s.years_of_experience desc LIMIT 3;

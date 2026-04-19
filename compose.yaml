@@ -1,0 +1,72 @@
+name: HR App
+
+services:
+  app:
+    build:  .
+    container_name: hr_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - TZ=Asia/Jakarta
+    volumes:
+      - crondata:/home/cron
+    command: ["node", "src/index.js"]
+
+  db:
+    image: ubuntu/postgres:latest 
+    container_name: hr_app_db
+    restart: always
+    environment:
+      - POSTGRES_DB=appdatabase
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=onlydb
+      - TZ=Asia/Jakarta
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+      - ./db_scripts:/home/db_scripts
+    expose:
+      - 5432
+    ports:
+      - "${HOST_DB_PORT:-5435}:5432"
+
+  cron:
+    build: .
+    container_name: hr_app_cron
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://app:onlydb@db:5432/appdatabase
+      - TZ=Asia/Jakarta
+    volumes:
+      - crondata:/home/cron
+    command: ["cron", "-f"]
+  # cron:
+  #   image: ubuntu:resolute-20260413
+  #   container_name: hwtest_cron
+  #   volumes:
+  #     - ${CRON_DATA_VOLUME:-crondata:/home/cron}
+  #     - src:/var/www/app/src
+  #     - scripts:/var/www/app/scripts
+  #     - logs:/var/www/app/logs
+
+  #   command: >
+  #     sh -c "echo '0 * * * * echo Hello from cron' | crontab - && crond -f"
+
+  
+volumes:
+  pgdata: {}
+  crondata: {}
+  src: {}
+  scripts: {}
+
+  # cron:
+  #   image: alpine/git:latest
+  #   container_name: hwtest_cron
+  #   command: >
+  #     sh -c "echo '* * * * * echo Hello from cron' | crontab - && crond -f"
+  #   volumes:
+  #     - ./cron:/etc/cron.d

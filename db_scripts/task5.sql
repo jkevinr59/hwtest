@@ -1,0 +1,1 @@
+select * from staff s where lower(s.position) = 'engineer' and s.years_of_experience <= 3;

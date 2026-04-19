@@ -1,0 +1,50 @@
+{
+  "user": {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "isActive": true,
+    "roles": [
+      "admin",
+      "user"
+    ],
+    "preferences": {
+      "notifications": {
+        "email": true,
+        "sms": false
+      },
+      "theme": "dark"
+    }
+  },
+  "products": [
+    {
+      "id": 101,
+      "name": "Laptop",
+      "price": 999.99,
+      "inStock": true
+    },
+    {
+      "id": 102,
+      "name": "Headphones",
+      "price": 199.99,
+      "inStock": false
+    }
+  ],
+  "orderHistory": [
+    {
+      "orderId": 1001,
+      "date": "2023-10-01",
+      "total": 1199.98,
+      "items": [
+        {
+          "productId": 101,
+          "quantity": 1
+        },
+        {
+          "productId": 102,
+          "quantity": 2
+        }
+      ]
+    }
+  ]
+}

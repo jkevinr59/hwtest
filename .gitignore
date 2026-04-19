@@ -1,0 +1,23 @@
+.env
+
+logs/
+*.log
+
+node_modules/
+npm-debug.log*
+yarn-error.log*
+build/
+dist/
+coverage/
+
+*.tar
+*.img
+
+# System
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,1 @@
+docker exec -i hr_app_db psql -U app -d appdatabase -f /home/db_scripts/task1.sql

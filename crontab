@@ -1,0 +1,10 @@
+DATABASE_URL=postgres://app:onlydb@db:5432/appdatabase
+
+* * * * * cd /var/www/app && PATH=/usr/local/bin:/usr/bin npm run collect >>/home/cron/collect.log 2>&1
+# 0 8 * * * cd /var/www/app && PATH=/usr/local/bin:/usr/bin npm run collect >>/home/cron/collect.log 2>&1
+# 0 12 * * * cd /var/www/app && PATH=/usr/local/bin:/usr/bin npm run collect >>/home/cron/collect.log 2>&1
+# 0 15 * * * cd /var/www/app && PATH=/usr/local/bin:/usr/bin npm run collect >>/home/cron/collect.log 2>&1
+
+
+* * * * * cd /var/www/app && PATH=/usr/local/bin:/usr/bin npm run clean>>/home/cron/clean.log 2>&1
+
