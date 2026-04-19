@@ -6,7 +6,7 @@ const pool = new Pool({
 
 async function list() {
     let data = [];
-    let query = "SELECT id,name,email,phone,interviewed_at FROM applicant ORDER BY created_at DESC LIMIT 100";
+    let query = "SELECT id,name,email,phone,interviewed_at FROM applicant ORDER BY id DESC LIMIT 100";
     try {
         const res = await pool.query(query);
         data = res.rows;
@@ -70,6 +70,14 @@ async function store(applicantData){
 }
 
 async function update(applicantId, applicantData){
+    if(!applicantId || !applicantData) {
+        return JSON.stringify({
+            status: 0,
+            message: "Invalid applicant data",
+            data: null
+        });
+    }
+
     let status = 0;
     let message = "";
     let query = "UPDATE applicant SET name = $1, phone = $2, interviewed_at = $3 WHERE id = $4 RETURNING id";

@@ -16,6 +16,7 @@ const server = createServer(async(req, res) => {
     }
     if(req.url.startsWith('/applicants')) {
         const applicant = require('./applicant');
+        let applicantId = null;
         switch (method) {
             case 'GET':
                 let applicantId = url.split('/')[2];
@@ -45,20 +46,33 @@ const server = createServer(async(req, res) => {
                 req.on('data', chunk => {
                     body += chunk.toString();
                 });
-                req.on('end', () => {
+                req.on('end', async () => {
                     let data = JSON.parse(body);
-                    res.end(applicant.store(data));
+                    res.end(await applicant.store(data));
                 });
                 break;
             case 'PUT':
-                let bodyPut = '';
-                req.on('data', chunk => {
-                    bodyPut += chunk.toString();
-                });
-                req.on('end', () => {
-                    let data = JSON.parse(bodyPut);
-                    res.end(applicant.update(applicantId, data));
-                });
+                let updateId = url.split('/')[2];
+                if (updateId) {
+                    try {
+                        let bodyPut = '';
+                        req.on('data', chunk => {
+                            bodyPut += chunk.toString();
+                        });
+                        req.on('end', async () => {
+                            let data = JSON.parse(bodyPut);
+                            res.end(await applicant.update(updateId, data));
+                        });
+                    } catch (error) {
+                        console.error('Error getting applicant :', error);
+                        res.statusCode = 500;
+                        res.end('Internal Server Error');
+                    }
+                }
+                else {
+                    res.statusCode = 400;
+                    res.end('Bad Request: Applicant ID is required for update');
+                }
                 break;
             case 'DELETE':
                 res.statusCode = 204;
