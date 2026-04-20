@@ -99,7 +99,9 @@ Database migrations are automatically applied when the Docker containers start.
 
 SQL Test answer stored in ./db_scripts folder and mounted inside db container in /home/db_scripts . For the test convenience this app already includes staff table inside hrapp_db container to be used to test the sql result,to run it
 
-docker exec -i <db container> psql -U <username> -d <database name> -f <sql file inside>
+   ```bash
+   docker exec -i db_container psql -U username -d database_name -f /path/to/sql_file
+   ```
 
 example:
    ```bash
