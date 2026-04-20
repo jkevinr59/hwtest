@@ -102,7 +102,9 @@ SQL Test answer stored in ./db_scripts folder and mounted inside db container in
 docker exec -i <db container> psql -U <username> -d <database name> -f <sql file inside>
 
 example:
-docker exec -i hr_app_db psql -U app -d appdatabase -f /home/db_scripts/task1.sql
+   ```bash
+   docker exec -i hr_app_db psql -U app -d appdatabase -f /home/db_scripts/task1.sql
+   ```
 
 ## Project Structure
 
